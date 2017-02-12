@@ -31,10 +31,23 @@ class Route
         $method = Request::requetMethod();
 
         if(array_key_exists($path, self::$routes[$method])) {
-            return self::$routes[$method][$path] . '.php';
+            $this->callController(... explode('@', self::$routes[$method][$path]));
         }else{
             header('HTTP/1.1 404 Not Found');
-            return  "controllers/error/404.php";
+            require_once "views/error/404.php";
         }
+    }
+
+    /**
+     * @param $class
+     * @param $method
+     *
+     * @return $this
+     */
+    protected function callController($class, $method)
+    {
+        call_user_func_array([new $class, $method], []);
+
+        return $this;
     }
 }
