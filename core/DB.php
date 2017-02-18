@@ -6,18 +6,18 @@ class DB
 
     public function __construct(array $config)
     {
-        $this->db = new mysqli(
-            $config['host'],
+        $this->db = new \PDO(
+            $config['dns'],
             $config['user'],
             $config['password'],
-            $config['dbname']
+            $config['options']
         );
     }
     
     public function insert($table, array $data)
     {
         $fields = implode(', ', array_keys($data));
-        $values = '\'' . implode('\', \'', array_values($data)) . '\'';
+        $values = ':' . implode(', :', array_keys($data));
 
         $sql = sprintf(
             "INSERT INTO %s (%s) VALUE (%s)",
@@ -25,8 +25,8 @@ class DB
             $fields,
             $values
         );
-        
-        return $this->db->query($sql);
+
+        return $this->db->prepare($sql)->execute($data);
     }
 
     public function select($table)
@@ -35,6 +35,6 @@ class DB
         
         $result = $this->db->query($sql);
         
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->fetchAll();
     }
 }

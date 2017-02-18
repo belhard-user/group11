@@ -28,10 +28,10 @@
             <input type="submit">
         <ul>
             <?php foreach($tasks as $task): ?>
-                <?php $check = (bool) $task['complete'] ?>
+                <?php $check = (bool) $task->complete ?>
                 <li<?= ($check) ? ' class="done"' : '' ?>>
-                    <input <?= ($check) ? 'checked' : '' ?> type="checkbox" name="complete[]" value="<?= $task['id'] ?>">
-                    <?= $task['title'] ?>
+                    <input <?= ($check) ? 'checked' : '' ?> type="checkbox" name="complete[]" value="<?= $task->id ?>">
+                    <?= $task->title ?>
                 </li>
             <?php endforeach; ?>
         </ul>
