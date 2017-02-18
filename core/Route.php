@@ -1,5 +1,7 @@
 <?php
 
+namespace Core;
+
 class Route
 {
     protected static $routes = [
@@ -46,6 +48,7 @@ class Route
      */
     protected function callController($class, $method)
     {
+        $class = 'App\\' . $class;
         call_user_func_array([new $class, $method], []);
 
         return $this;

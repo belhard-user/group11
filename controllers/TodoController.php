@@ -1,5 +1,10 @@
 <?php
 
+namespace App;
+
+use Core\App;
+use Core\Request;
+
 class TodoController
 {
     private $db;
