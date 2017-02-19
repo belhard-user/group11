@@ -22,8 +22,10 @@ class TodoController
 
     public function addTodo()
     {
+        $title = \Core\Filters\TwitterFilter::user(strip_tags($_POST['title']));
+
         $this->db->insert('todo', [
-            'title' => $_POST['title'],
+            'title' => $title,
             'complete' => 0
         ]);
 
